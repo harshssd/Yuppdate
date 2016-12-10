@@ -10,7 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.harshssd.yuppdate.dummy.DummyContent;
+import com.harshssd.yuppdate.dummy.MovieData;
 
 /**
  * An activity representing a list of Movies. This activity
@@ -59,6 +59,6 @@ public class MovieListActivity extends AppCompatActivity {
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        recyclerView.setAdapter(new MoviesAdapter(DummyContent.ITEMS));
+        recyclerView.setAdapter(new MoviesAdapter(MovieData.MOVIES));
     }
 }

@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.harshssd.yuppdate.dummy.DummyContent;
-
 import java.util.List;
 
 /**
@@ -18,10 +16,10 @@ import java.util.List;
  */
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesViewHolder> {
 
-    private final List<DummyContent.DummyItem> mValues;
+    private final List<Movie> movies;
 
-    public MoviesAdapter(List<DummyContent.DummyItem> items) {
-        mValues = items;
+    public MoviesAdapter(List<Movie> movies) {
+        this.movies = movies;
     }
 
     @Override
@@ -33,16 +31,15 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesViewHolder> {
 
     @Override
     public void onBindViewHolder(final MoviesViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mMovieItem = movies.get(position);
+        holder.mTitleView.setText(movies.get(position).getTitle());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (v.getContext().getResources().getBoolean(R.bool.twoPaneMode)) {
                     Bundle arguments = new Bundle();
-                    arguments.putString(MovieDetailFragment.ARG_ITEM_ID, holder.mItem.id);
+                    arguments.putString(MovieDetailFragment.ARG_ITEM_ID, holder.mMovieItem.getId());
                     MovieDetailFragment fragment = new MovieDetailFragment();
                     fragment.setArguments(arguments);
                     ((FragmentActivity) v.getContext()).getSupportFragmentManager().beginTransaction()
@@ -51,15 +48,16 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesViewHolder> {
                 } else {
                     Context context = v.getContext();
                     Intent intent = new Intent(context, MovieDetailActivity.class);
-                    intent.putExtra(MovieDetailFragment.ARG_ITEM_ID, holder.mItem.id);
+                    intent.putExtra(MovieDetailFragment.ARG_ITEM_ID, holder.mMovieItem.getId());
 
                     context.startActivity(intent);
                 }
             }
-        });    }
+        });
+    }
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return movies.size();
     }
 }
