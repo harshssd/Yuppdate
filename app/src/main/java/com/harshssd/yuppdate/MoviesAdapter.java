@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 /**
@@ -32,7 +34,10 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesViewHolder> {
     @Override
     public void onBindViewHolder(final MoviesViewHolder holder, int position) {
         holder.mMovieItem = movies.get(position);
-        holder.mTitleView.setText(movies.get(position).getTitle());
+
+        // Load the Poster Image using Picasso
+        final String POSTER_URL = "http://image.tmdb.org/t/p/w185/" + holder.mMovieItem.getPosterPath();
+        Picasso.with(holder.mPosterView.getContext()).load(POSTER_URL).into(holder.mPosterView);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

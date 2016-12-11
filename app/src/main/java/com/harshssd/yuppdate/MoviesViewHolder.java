@@ -2,6 +2,7 @@ package com.harshssd.yuppdate;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -10,12 +11,14 @@ import android.widget.TextView;
 public class MoviesViewHolder extends RecyclerView.ViewHolder {
     public final View mView;
     public final TextView mTitleView;
+    public final ImageView mPosterView;
     public Movie mMovieItem;
 
     public MoviesViewHolder(View view) {
         super(view);
         mView = view;
         mTitleView = (TextView) view.findViewById(R.id.title);
+        mPosterView = (ImageView) view.findViewById(R.id.moviePoster);
     }
 
     @Override
