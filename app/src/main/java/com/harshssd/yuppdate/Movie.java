@@ -1,9 +1,11 @@
 package com.harshssd.yuppdate;
 
+import java.io.Serializable;
+
 /**
  * Created by Harsha on 12/9/16.
  */
-public class Movie {
+public class Movie implements Serializable {
     private String id;
     private String title;
     private String posterPath;

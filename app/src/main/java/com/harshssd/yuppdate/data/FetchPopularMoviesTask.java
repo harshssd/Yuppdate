@@ -22,12 +22,12 @@ import java.util.List;
  *
  * @author Harsha
  */
-public class FetchPopularMoviesTask extends AsyncTask {
+public class FetchPopularMoviesTask extends AsyncTask<Void, Void, List<Movie>> {
 
     private final String LOG_TAG = FetchPopularMoviesTask.class.getSimpleName();
 
     @Override
-    protected Object doInBackground(Object[] params) {
+    protected List<Movie> doInBackground(Void... params) {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
 

@@ -39,7 +39,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesViewHolder> {
             public void onClick(View v) {
                 if (v.getContext().getResources().getBoolean(R.bool.twoPaneMode)) {
                     Bundle arguments = new Bundle();
-                    arguments.putString(MovieDetailFragment.ARG_ITEM_ID, holder.mMovieItem.getId());
+                    arguments.putSerializable(MovieDetailFragment.ARG_ITEM_ID, holder.mMovieItem);
                     MovieDetailFragment fragment = new MovieDetailFragment();
                     fragment.setArguments(arguments);
                     ((FragmentActivity) v.getContext()).getSupportFragmentManager().beginTransaction()
@@ -48,7 +48,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesViewHolder> {
                 } else {
                     Context context = v.getContext();
                     Intent intent = new Intent(context, MovieDetailActivity.class);
-                    intent.putExtra(MovieDetailFragment.ARG_ITEM_ID, holder.mMovieItem.getId());
+                    intent.putExtra(MovieDetailFragment.ARG_ITEM_ID, holder.mMovieItem);
 
                     context.startActivity(intent);
                 }

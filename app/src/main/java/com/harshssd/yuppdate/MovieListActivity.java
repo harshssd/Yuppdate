@@ -10,7 +10,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.harshssd.yuppdate.data.FetchPopularMoviesTask;
 import com.harshssd.yuppdate.dummy.MovieData;
+
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * An activity representing a list of Movies. This activity
@@ -26,6 +30,8 @@ public class MovieListActivity extends AppCompatActivity {
      * device.
      */
     private boolean mTwoPane;
+
+    private List<Movie> mMovies;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +65,13 @@ public class MovieListActivity extends AppCompatActivity {
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        recyclerView.setAdapter(new MoviesAdapter(MovieData.MOVIES));
+        FetchPopularMoviesTask fetchPopularMoviesTask = new FetchPopularMoviesTask();
+        try {
+            mMovies = fetchPopularMoviesTask.execute().get();
+        } catch (InterruptedException | ExecutionException e) {
+            mMovies = null;
+            e.printStackTrace();
+        }
+        recyclerView.setAdapter(new MoviesAdapter(mMovies));
     }
 }
