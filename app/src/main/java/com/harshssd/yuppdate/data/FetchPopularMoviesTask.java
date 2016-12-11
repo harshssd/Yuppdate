@@ -4,12 +4,17 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.harshssd.yuppdate.Movie;
+
+import org.json.JSONException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 /**
  * Asynchronous Task to fetch the Popular Movies using MovieDB API.
@@ -53,14 +58,13 @@ public class FetchPopularMoviesTask extends AsyncTask {
                 // But it does make debugging a *lot* easier if you print out the completed
                 // buffer for debugging.
                 buffer.append(line + "\n");
-                Log.v(LOG_TAG, line + "\n");
-
             }
             if (buffer.length() == 0) {
                 return null;
             }
-            return buffer.toString();
-        } catch (IOException e) {
+            MovieDataParser movieDataParser = new MovieDataParser();
+            return movieDataParser.getMovieObjectFromJson(buffer.toString());
+        } catch (IOException | JSONException e) {
             Log.e(LOG_TAG, "Error ", e);
             return null;
         } finally {
