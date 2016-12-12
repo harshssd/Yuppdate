@@ -11,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.harshssd.yuppdate.data.FetchPopularMoviesTask;
-import com.harshssd.yuppdate.dummy.MovieData;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -64,7 +63,9 @@ public class MovieListActivity extends AppCompatActivity {
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         recyclerView.setHasFixedSize(true);
+
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+
         FetchPopularMoviesTask fetchPopularMoviesTask = new FetchPopularMoviesTask();
         try {
             mMovies = fetchPopularMoviesTask.execute().get();
