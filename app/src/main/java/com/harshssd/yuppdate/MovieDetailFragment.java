@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -61,6 +63,12 @@ public class MovieDetailFragment extends Fragment {
             ImageView mPosterView = ((ImageView) rootView.findViewById(R.id.detail_movie_poster_image));
             final String POSTER_URL = "http://image.tmdb.org/t/p/w185/" + mMovieItem.getPosterPath();
             Picasso.with(rootView.getContext()).load(POSTER_URL).into(mPosterView);
+            TextView mReleaseYear = (TextView) rootView.findViewById(R.id.detail_movie_release_year_text);
+            mReleaseYear.setText(String.valueOf(mMovieItem.getReleaseDate().getYear() + 1900));
+            TextView mAverageRating = (TextView) rootView.findViewById(R.id.detail_movie_rating_text);
+            mAverageRating.setText(mMovieItem.getAverageRating() + "/10");
+            TextView mOverview = (TextView) rootView.findViewById(R.id.detail_movie_overview);
+            mOverview.setText(mMovieItem.getOverView());
         }
 
         return rootView;

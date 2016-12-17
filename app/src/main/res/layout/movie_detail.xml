@@ -24,18 +24,10 @@
             <TextView android:id="@+id/detail_movie_release_year_text"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:text="2015"
                 android:textSize="25sp"/>
-            <TextView android:id="@+id/detail_movie_duration_text"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:text="120min"
-                android:textStyle="italic"
-                android:textSize="20sp"/>
             <TextView android:id="@+id/detail_movie_rating_text"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:text="8.1/10"
                 android:textStyle="italic"
                 android:layout_marginBottom="10dp"/>
             <Button android:id="@+id/detail_movie_favorite_button"
@@ -46,5 +38,9 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <TextView android:id="@+id/detail_movie_overview"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"/>
 
 </LinearLayout>
