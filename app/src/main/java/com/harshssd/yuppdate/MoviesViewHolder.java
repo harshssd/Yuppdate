@@ -18,7 +18,7 @@ public class MoviesViewHolder extends RecyclerView.ViewHolder {
         super(view);
         mView = view;
         mTitleView = (TextView) view.findViewById(R.id.title);
-        mPosterView = (ImageView) view.findViewById(R.id.moviePoster);
+        mPosterView = (ImageView) view.findViewById(R.id.list_item_movie_poster_image);
     }
 
     @Override

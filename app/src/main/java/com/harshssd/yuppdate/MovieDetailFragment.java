@@ -7,7 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 /**
  * A fragment representing a single Movie detail screen.
@@ -56,8 +58,9 @@ public class MovieDetailFragment extends Fragment {
 
         // Show the dummy content as text in a TextView.
         if (mMovieItem != null) {
-            String movieDetail = mMovieItem.getTitle() + "\n" + mMovieItem.getPosterPath();
-            ((TextView) rootView.findViewById(R.id.movie_detail)).setText(movieDetail);
+            ImageView mPosterView = ((ImageView) rootView.findViewById(R.id.detail_movie_poster_image));
+            final String POSTER_URL = "http://image.tmdb.org/t/p/w185/" + mMovieItem.getPosterPath();
+            Picasso.with(rootView.getContext()).load(POSTER_URL).into(mPosterView);
         }
 
         return rootView;
