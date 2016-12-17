@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,8 +36,18 @@ public class MovieDataParser {
         final String TMDB_MOVIE_ID = "id";
         final String TMDB_MOVIE_TITLE = "original_title";
         final String TMDB_MOVIE_POSTER_PATH = "poster_path";
+        final String TMDB_MOVIE_RELEASE_DATE = "release_date";
+        final String TMDB_MOVIE_OVERVIEW = "overview";
+        final String TMDB_MOVIE_AVERAGE_RATING = "vote_average";
 
-        return new Movie(movieJsonObject.getString(TMDB_MOVIE_ID), movieJsonObject.getString(TMDB_MOVIE_TITLE),
-                movieJsonObject.getString(TMDB_MOVIE_POSTER_PATH));
+        Movie movie = Movie.builder()
+                .id(movieJsonObject.getString(TMDB_MOVIE_ID))
+                .title(movieJsonObject.getString(TMDB_MOVIE_TITLE))
+                .overView(movieJsonObject.getString(TMDB_MOVIE_OVERVIEW))
+                .releaseDate(Date.valueOf(movieJsonObject.getString(TMDB_MOVIE_RELEASE_DATE)))
+                .posterPath(movieJsonObject.getString(TMDB_MOVIE_POSTER_PATH))
+                .averageRating(Float.valueOf(movieJsonObject.getString(TMDB_MOVIE_AVERAGE_RATING)))
+                .build();
+        return movie;
     }
 }
