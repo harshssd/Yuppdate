@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -64,7 +65,7 @@ public class FetchPopularMoviesTask extends AsyncTask<Void, Void, List<Movie>> {
             }
             MovieDataParser movieDataParser = new MovieDataParser();
             return movieDataParser.getMovieObjectFromJson(buffer.toString());
-        } catch (IOException | JSONException e) {
+        } catch (IOException | JSONException | ParseException e) {
             Log.e(LOG_TAG, "Error ", e);
             return null;
         } finally {
