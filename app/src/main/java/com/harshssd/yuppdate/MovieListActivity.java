@@ -35,6 +35,10 @@ public class MovieListActivity extends AppCompatActivity {
      */
     private boolean mTwoPane;
 
+    private RecyclerView recyclerView;
+    private GridLayoutManager gridLayoutManager;
+    private int scrollPosition;
+
     private List<Movie> mMovies;
 
     @Override
@@ -56,7 +60,7 @@ public class MovieListActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.movie_list);
+        recyclerView = (RecyclerView) findViewById(R.id.movie_list);
         assert recyclerView != null;
         setupRecyclerView(recyclerView);
     }
@@ -64,7 +68,8 @@ public class MovieListActivity extends AppCompatActivity {
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         recyclerView.setHasFixedSize(true);
 
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        gridLayoutManager = new GridLayoutManager(this, 2);
+        recyclerView.setLayoutManager(gridLayoutManager);
 
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         String sortKey = sharedPrefs.getString(getString(R.string.pref_sort_key),
@@ -102,5 +107,21 @@ public class MovieListActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (gridLayoutManager != null) {
+            scrollPosition = gridLayoutManager.findFirstVisibleItemPosition();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (gridLayoutManager != null) {
+            recyclerView.scrollToPosition(scrollPosition);
+        }
     }
 }
