@@ -2,6 +2,7 @@ package com.harshssd.yuppdate.data;
 
 import android.net.Uri;
 import android.os.AsyncTask;
+import com.harshssd.yuppdate.BuildConfig;
 import android.util.Log;
 
 import com.harshssd.yuppdate.Movie;
@@ -36,7 +37,7 @@ public class FetchPopularMoviesTask extends AsyncTask<String, Void, List<Movie>>
             final String MOVIE_DB_BASE_URL = params[0];
             final String API_KEY = "api_key";
             Uri movieDbUri = Uri.parse(MOVIE_DB_BASE_URL).buildUpon()
-                    .appendQueryParameter(API_KEY, "<API_KEY>")
+                    .appendQueryParameter(API_KEY, BuildConfig.THE_MOVIE_DB_API_KEY)
                     .build();
             URL movieDbUrl = new URL(movieDbUri.toString());
 
