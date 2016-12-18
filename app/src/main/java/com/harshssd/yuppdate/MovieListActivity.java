@@ -1,7 +1,9 @@
 package com.harshssd.yuppdate;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -49,7 +51,11 @@ public class MovieListActivity extends AppCompatActivity {
         // If this view is present, then the
         // activity should be in two-pane mode.
         mTwoPane = findViewById(R.id.movie_detail_container) != null;
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.movie_list);
         assert recyclerView != null;
         setupRecyclerView(recyclerView);
@@ -60,9 +66,17 @@ public class MovieListActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String sortKey = sharedPrefs.getString(getString(R.string.pref_sort_key),
+                getString(R.string.pref_sort_key_popularity));
+        String TMDBUrl = "https://api.themoviedb.org/3/movie/popular?";
+        if (sortKey.equals(getString(R.string.pref_sort_key_rating))) {
+            TMDBUrl = "https://api.themoviedb.org/3/movie/top_rated?";
+        }
+
         FetchPopularMoviesTask fetchPopularMoviesTask = new FetchPopularMoviesTask();
         try {
-            mMovies = fetchPopularMoviesTask.execute().get();
+            mMovies = fetchPopularMoviesTask.execute(TMDBUrl).get();
         } catch (InterruptedException | ExecutionException e) {
             mMovies = null;
             e.printStackTrace();

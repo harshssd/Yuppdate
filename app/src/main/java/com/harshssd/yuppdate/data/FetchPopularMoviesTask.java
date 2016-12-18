@@ -23,17 +23,17 @@ import java.util.List;
  *
  * @author Harsha
  */
-public class FetchPopularMoviesTask extends AsyncTask<Void, Void, List<Movie>> {
+public class FetchPopularMoviesTask extends AsyncTask<String, Void, List<Movie>> {
 
     private final String LOG_TAG = FetchPopularMoviesTask.class.getSimpleName();
 
     @Override
-    protected List<Movie> doInBackground(Void... params) {
+    protected List<Movie> doInBackground(String... params) {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
 
         try {
-            final String MOVIE_DB_BASE_URL = "https://api.themoviedb.org/3/movie/popular?";
+            final String MOVIE_DB_BASE_URL = params[0];
             final String API_KEY = "api_key";
             Uri movieDbUri = Uri.parse(MOVIE_DB_BASE_URL).buildUpon()
                     .appendQueryParameter(API_KEY, "<API_KEY>")
