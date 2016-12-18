@@ -5,15 +5,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.harshssd.yuppdate.data.FetchPopularMoviesTask;
 
@@ -29,6 +26,9 @@ import java.util.concurrent.ExecutionException;
  * item details side-by-side using two vertical panes.
  */
 public class MovieListActivity extends AppCompatActivity {
+    private static final String TMDB_URL_TOP_RATED_MOVIES = "https://api.themoviedb.org/3/movie/top_rated?";
+    private static final String TMDB_URL_POPULAR_MOVIES = "https://api.themoviedb.org/3/movie/popular?";
+
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
@@ -71,22 +71,24 @@ public class MovieListActivity extends AppCompatActivity {
         gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String sortKey = sharedPrefs.getString(getString(R.string.pref_sort_key),
-                getString(R.string.pref_sort_key_popularity));
-        String TMDBUrl = "https://api.themoviedb.org/3/movie/popular?";
-        if (sortKey.equals(getString(R.string.pref_sort_key_rating))) {
-            TMDBUrl = "https://api.themoviedb.org/3/movie/top_rated?";
-        }
-
+        String TMDBBaseUrl = selectTMDBBaseUrl();
         FetchPopularMoviesTask fetchPopularMoviesTask = new FetchPopularMoviesTask();
         try {
-            mMovies = fetchPopularMoviesTask.execute(TMDBUrl).get();
+            mMovies = fetchPopularMoviesTask.execute(TMDBBaseUrl).get();
         } catch (InterruptedException | ExecutionException e) {
             mMovies = null;
             e.printStackTrace();
         }
         recyclerView.setAdapter(new MoviesAdapter(mMovies));
+    }
+
+    private String selectTMDBBaseUrl() {
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String sortKey = sharedPrefs.getString(getString(R.string.pref_sort_key),
+                getString(R.string.pref_sort_key_popularity));
+
+        return sortKey.equals(getString(R.string.pref_sort_key_rating))
+                ? TMDB_URL_TOP_RATED_MOVIES : TMDB_URL_POPULAR_MOVIES;
     }
 
     @Override
