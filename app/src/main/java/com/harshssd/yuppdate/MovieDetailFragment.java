@@ -61,7 +61,11 @@ public class MovieDetailFragment extends Fragment {
         if (mMovieItem != null) {
             ImageView mPosterView = ((ImageView) rootView.findViewById(R.id.detail_movie_poster_image));
             final String POSTER_URL = "http://image.tmdb.org/t/p/w185/" + mMovieItem.getPosterPath();
-            Picasso.with(rootView.getContext()).load(POSTER_URL).into(mPosterView);
+            Picasso.with(rootView.getContext())
+                    .load(POSTER_URL)
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.error)
+                    .into(mPosterView);
             TextView mReleaseYear = (TextView) rootView.findViewById(R.id.detail_movie_release_year_text);
             mReleaseYear.setText(String.valueOf(mMovieItem.getReleaseDate().getYear() + 1900));
             TextView mAverageRating = (TextView) rootView.findViewById(R.id.detail_movie_rating_text);

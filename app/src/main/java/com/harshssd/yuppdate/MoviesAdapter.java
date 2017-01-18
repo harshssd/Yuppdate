@@ -37,7 +37,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesViewHolder> {
 
         // Load the Poster Image using Picasso
         final String POSTER_URL = "http://image.tmdb.org/t/p/w185/" + holder.mMovieItem.getPosterPath();
-        Picasso.with(holder.mPosterView.getContext()).load(POSTER_URL).into(holder.mPosterView);
+        Picasso.with(holder.mPosterView.getContext())
+                .load(POSTER_URL)
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.error)
+                .into(holder.mPosterView);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
